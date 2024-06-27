@@ -52,7 +52,7 @@ jobs:
         run: |
           run_id=${{ github.run_id }}
           repo=${{ github.repository }}
-          job_name="get-job-id"  # Replace with your actual job name
+          job_name="Second Job" 
           api_url="https://api.github.com/repos/${repo}/actions/runs/${run_id}/jobs"
           response=$(curl -s -H "Authorization: token $GITHUB_TOKEN" $api_url)
           echo "Response: $response"
