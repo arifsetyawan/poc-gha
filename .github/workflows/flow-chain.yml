@@ -61,7 +61,7 @@ jobs:
       - run: |
           echo ${{ steps.approval.outputs.approved }}
 
-      - if: steps.approval.outputs.approved
+      - if: ${{ steps.approval.outputs.approved == 'false' }}
         run: exit 1
 
       - name: Display structure of downloaded files 3
