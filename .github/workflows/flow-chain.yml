@@ -49,9 +49,9 @@ jobs:
           token: ${{ secrets.ACTION_GH_PAT }}
           approvers: "arifsetyawan"
           minimumApprovals: "1"
-          issueTitle: "${{ github.event_name }} approval request"
+          issueTitle: "${{ github.head_ref }} approval request"
           issueLabels: "cicd-approval"
-          issueBody: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          issueBody: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/job/${{ github.job }}"
           waitInterval: "1"
           waitTimeout: "10"
 
