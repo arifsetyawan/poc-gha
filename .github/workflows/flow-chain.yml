@@ -44,6 +44,7 @@ jobs:
       - run: cat logs/test.log
 
       - uses: ekeel/approval-action@v1.0.3
+        id: approval
         with:
           token: ${{ secrets.ACTION_GH_PAT }}
           approvers: "arifsetyawan"
@@ -56,3 +57,13 @@ jobs:
           rejectWords: "deny, denied, reject, rejected"
           waitInterval: "1"
           waitTimeout: "10"
+
+      - name: Display structure of downloaded files 2
+        run: ls -al logs
+
+      - if: ${{ steps.approval.approved == false }}
+        run: |
+          exit 1
+
+      - name: Display structure of downloaded files 3
+        run: ls -al logs
