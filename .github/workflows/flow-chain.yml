@@ -41,11 +41,17 @@ jobs:
       - name: Display structure of downloaded files
         run: ls -al logs
 
-      - uses: trstringer/manual-approval@v1
+      - run: cat logs/test.log
+
+      - uses: ekeel/approval-action@v1.0.3
         with:
-          secret: ${{ secrets.ACTION_GH_PAT }}
-          approvers: owner
-          minimum-approvals: 1
-          issue-title: "${{ github.event_name }} Approval Request"
-          issue-body: ""
-          exclude-workflow-initiator-as-approver: false
+          token: ${{ secrets.ACTION_GH_PAT }}
+          approvers: "arifsetyawan"
+          minimumApprovals: "1"
+          issueTitle: "${{ github.event_name }} approval request"
+          issueLabels: "cicd-approval"
+          excludeInitiator: "false"
+          approveWords: "approve, approved"
+          rejectWords: "deny, denied, reject, rejected"
+          waitInterval: "10"
+          waitTimeout: "10"
