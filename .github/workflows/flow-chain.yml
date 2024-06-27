@@ -7,6 +7,9 @@ concurrency:
   group: test_flow
   cancel-in-progress: true
 
+env:
+  JOB_ID: ""
+
 jobs:
   first:
     name: First Job
@@ -43,6 +46,20 @@ jobs:
 
       - run: cat logs/test.log
 
+      - name: Get Job ID
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          run_id=${{ github.run_id }}
+          repo=${{ github.repository }}
+          job_name="get-job-id"  # Replace with your actual job name
+          api_url="https://api.github.com/repos/${repo}/actions/runs/${run_id}/jobs"
+          response=$(curl -s -H "Authorization: token $GITHUB_TOKEN" $api_url)
+          echo "Response: $response"
+          job_id=$(echo $response | jq -r --arg job_name "$job_name" '.jobs[] | select(.name == $job_name) | .id')
+          echo "Job ID: $job_id"
+          echo "JOB_ID=$job_id" >> $GITHUB_ENV
+
       - uses: ekeel/approval-action@v1.0.3
         id: approval
         with:
@@ -51,7 +68,7 @@ jobs:
           minimumApprovals: "1"
           issueTitle: "${{ github.head_ref }} approval request"
           issueLabels: "cicd-approval"
-          issueBody: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/job/${{ job.container.id }}"
+          issueBody: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/job/${{ env.JOB_ID }}"
           waitInterval: "1"
           waitTimeout: "10"
 
