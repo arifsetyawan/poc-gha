@@ -44,8 +44,8 @@ jobs:
       - uses: trstringer/manual-approval@v1
         with:
           secret: ${{ github.TOKEN }}
-          approvers: arifsetyawan
+          approvers: owner
           minimum-approvals: 1
-          issue-title: "${{ github.run_id }} Approval Request"
+          issue-title: "${{ github.event_name }} Approval Request"
           issue-body: ""
           exclude-workflow-initiator-as-approver: false
