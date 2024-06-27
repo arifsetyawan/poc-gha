@@ -1,0 +1,24 @@
+name: Test Flow Chain
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: test_flow
+  cancel-in-progress: true
+
+jobs:
+  first:
+    name: First Job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Upload logs
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-logs
+          path: log/
