@@ -43,7 +43,7 @@ jobs:
 
       - uses: trstringer/manual-approval@v1
         with:
-          secret: ${{ github.TOKEN }}
+          secret: ${{ secrets.ACTION_GH_PAT }}
           approvers: owner
           minimum-approvals: 1
           issue-title: "${{ github.event_name }} Approval Request"
