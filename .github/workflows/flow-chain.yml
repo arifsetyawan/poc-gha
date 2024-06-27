@@ -20,18 +20,26 @@ jobs:
       - name: Upload logs
         uses: actions/upload-artifact@v3
         with:
-          name: build-logs
-          path: logs/
+          name: logs
+          path: logs
 
   second:
     needs: [first]
     name: Second Job
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
       - uses: actions/download-artifact@v4
+        with:
+          name: logs
+          path: logs
 
       - name: Display structure of downloaded files
-        run: ls -R
+        run: ls -al logs
 
       - uses: trstringer/manual-approval@v1
         with:
