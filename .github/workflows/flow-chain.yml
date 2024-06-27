@@ -22,3 +22,21 @@ jobs:
         with:
           name: build-logs
           path: logs/
+
+  second:
+    name: Second Job
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+
+      - name: Display structure of downloaded files
+        run: ls -R
+
+      - uses: trstringer/manual-approval@v1
+        with:
+          secret: ${{ github.TOKEN }}
+          approvers: arifsetyawan
+          minimum-approvals: 1
+          issue-title: "${{ github.run_id }} Approval Request"
+          issue-body: ""
+          exclude-workflow-initiator-as-approver: false
