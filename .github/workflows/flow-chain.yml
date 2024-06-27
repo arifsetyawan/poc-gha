@@ -24,6 +24,7 @@ jobs:
           path: logs/
 
   second:
+    needs: [first]
     name: Second Job
     runs-on: ubuntu-latest
     steps:
