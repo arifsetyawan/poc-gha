@@ -62,9 +62,9 @@ jobs:
         run: ls -al logs
 
       - run: |
-          echo ${{ steps.approval.approved }}
+          echo ${{ steps.approval.outputs.approved }}
 
-      - if: ${{ steps.approval.approved == false }}
+      - if: ${{ steps.approval.outputs.approved == false }}
         run: |
           exit 1
 
